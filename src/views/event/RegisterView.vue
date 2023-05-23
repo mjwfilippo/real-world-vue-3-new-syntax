@@ -1,12 +1,18 @@
 <script setup>
 import { useRouter } from "vue-router";
+import { useFlashMessageStore } from "../../stores/flashMessage";
 
-defineProps(["event"]);
+const props = defineProps(["event"]);
+const store = useFlashMessageStore();
 const router = useRouter();
 
 const register = () => {
   // Call to API
   // If registered then redirect to event details
+
+  store.setFlashMessage(
+    "You are successfully registered for " + props.event.title
+  );
 
   router.push({
     name: "event-details"

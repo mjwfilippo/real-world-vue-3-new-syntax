@@ -1,22 +1,39 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useFlashMessageStore } from "./stores/flashMessage";
+
+const store = useFlashMessageStore();
 </script>
 
 <template>
   <div id="layout">
-    <header>
-      <div class="wrapper">
-        <nav>
-          <RouterLink :to="{ name: 'event-list' }">Events</RouterLink> |
-          <RouterLink :to="{ name: 'about' }">About</RouterLink>
-        </nav>
-      </div>
-    </header>
+    <div id="flashMessage" v-if="store.$state.flashMessage">
+      {{ store.$state.flashMessage }}
+    </div>
+    <div class="wrapper">
+      <nav>
+        <RouterLink :to="{ name: 'event-list' }">Events</RouterLink> |
+        <RouterLink :to="{ name: 'about' }">About</RouterLink>
+      </nav>
+    </div>
     <RouterView />
   </div>
 </template>
 
 <style>
+@keyframes greenfade {
+  from {
+    background: #75db9c;
+  }
+  to {
+    background: transparent;
+  }
+}
+
+#flashMessage {
+  animation: 3s linear greenfade;
+}
+
 #layout {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
