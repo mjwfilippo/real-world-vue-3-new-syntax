@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import EventListView from "@/views/EventListView.vue";
-import EventLayoutView from "@/views/event/LayoutView.vue";
-import EventDetailsView from "@/views/event/DetailsView.vue";
-import EventRegisterView from "@/views/event/RegisterView.vue";
-import EventEditView from "@/views/event/EditView.vue";
+import EventList from "@/views/EventList.vue";
+import EventLayout from "@/views/event/LayoutView.vue";
+import EventDetails from "@/views/event/DetailsView.vue";
+import EventRegister from "@/views/event/RegisterView.vue";
+import EventEdit from "@/views/event/EditView.vue";
 import AboutView from "@/views/AboutView.vue";
+import NotFound from "@/views/NotFound.vue";
+import NetworkError from "@/views/NetworkError.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,29 +14,29 @@ const router = createRouter({
     {
       path: "/",
       name: "event-list",
-      component: EventListView,
+      component: EventList,
       props: route => ({ page: parseInt(route.query.page) || 1 })
     },
     {
       path: "/events/:id",
       name: "event-layout",
       props: true,
-      component: EventLayoutView,
+      component: EventLayout,
       children: [
         {
           path: "",
           name: "event-details",
-          component: EventDetailsView
+          component: EventDetails
         },
         {
           path: "register",
           name: "event-register",
-          component: EventRegisterView
+          component: EventRegister
         },
         {
           path: "edit",
           name: "event-edit",
-          component: EventEditView
+          component: EventEdit
         }
       ]
     },
@@ -48,6 +50,22 @@ const router = createRouter({
       path: "/about",
       name: "about",
       component: AboutView
+    },
+    {
+      path: "/:catchAll(.*)",
+      name: "not-found",
+      component: NotFound
+    },
+    {
+      path: "/404/:resource",
+      name: "404-resource",
+      component: NotFound,
+      props: true
+    },
+    {
+      path: "/network-error",
+      name: "network-error",
+      component: NetworkError
     }
   ]
 });
