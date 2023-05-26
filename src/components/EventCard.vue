@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { EventItem } from "@/types";
+
 defineProps({
   event: {
     type: Object as PropType<EventItem>,
@@ -28,10 +29,12 @@ defineProps({
   cursor: pointer;
   border: 1px solid #39495c;
   margin-bottom: 18px;
+  transition: all 0.2s ease-in-out;
 }
 .event-card:hover {
-  transform: scale(1.01);
+  transform: scale(1.04);
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #5aab79;
 }
 .event-link {
   color: #2c3e50;

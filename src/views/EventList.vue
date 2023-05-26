@@ -3,12 +3,18 @@ import { ref, onMounted, computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import EventService from "@/services/EventService.js";
 import EventCard from "@/components/EventCard.vue";
+import { EventItem } from "@/types";
 
-const props = defineProps(["page"]);
+const props = defineProps({
+  page: {
+    type: Number,
+    required: true
+  }
+});
 
 const router = useRouter();
 
-const events = ref(null);
+const events = ref([] as EventItem[]);
 const totalEvents = ref(0);
 
 const page = computed(() => props.page);
@@ -20,7 +26,6 @@ const hasNextPage = computed(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    events.value = null;
     EventService.getEvents(2, props.page)
       .then(response => {
         events.value = response.data;

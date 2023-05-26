@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useFlashMessageStore } from "../../stores/flashMessage";
+import { EventItem } from "@/types";
+import { PropType } from "vue";
 
-const props = defineProps(["event"]);
+const props = defineProps({
+  event: {
+    type: Object as PropType<EventItem>,
+    required: true
+  }
+});
 const store = useFlashMessageStore();
 const router = useRouter();
 
