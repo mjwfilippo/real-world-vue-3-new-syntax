@@ -1,13 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { EventItem } from "@/types";
 import EventService from "@/services/EventService.js";
 
 const router = useRouter();
 
-const props = defineProps(["id"]);
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  }
+});
 
-const event = ref(null);
+const event = ref<EventItem>();
 
 onMounted(() => {
   EventService.getEvent(props.id)

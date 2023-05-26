@@ -6,9 +6,8 @@ export const useFlashMessageStore = defineStore("flashMessage", {
   }),
 
   actions: {
-    setFlashMessage(message) {
+    setFlashMessage(message: string) {
       this.flashMessage = message;
-      console.log(this.flashMessage);
 
       setTimeout(() => {
         this.flashMessage = "";
