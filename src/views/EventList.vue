@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watchEffect } from "vue";
-import { useRouter } from "vue-router";
+import { onBeforeRouteUpdate, useRouter } from "vue-router";
 import EventService from "@/services/EventService.js";
 import EventCard from "@/components/EventCard.vue";
 import { EventItem } from "@/types";
@@ -35,6 +35,19 @@ onMounted(() => {
         router.push({ name: "network-error" });
       });
   });
+});
+
+onBeforeRouteUpdate(async to => {
+  try {
+    const response = await EventService.getEvents(
+      2,
+      parseInt(to.query.page) || 1
+    );
+    events.value = response.data;
+    totalEvents.value = response.headers["x-total-count"];
+  } catch {
+    router.push({ name: "network-error" });
+  }
 });
 </script>
 
